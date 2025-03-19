@@ -8,6 +8,8 @@
 #include <list>
 #include <string>
 
+#include <shared_mutex>
+
 namespace Trading
 {
 	class TradeEngine;
@@ -65,6 +67,9 @@ private:
 	void CollectTrades() noexcept;
 
 private:
+	
+	mutable std::shared_mutex m_mutex;
+
 	ordersMap m_buyOrders;
 	ordersMap m_sellOrders;
 	std::vector<std::string> m_trades;
