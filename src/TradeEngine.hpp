@@ -30,7 +30,6 @@ public:
 	~TradeEngine() = default;
 
 public:
-	//Object representation of trading order.
 	struct TradeOrder
 	{
 		std::string identifier;

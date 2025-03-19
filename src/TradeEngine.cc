@@ -4,7 +4,6 @@
 #include <list>
 #include <sstream>
 #include <iostream>
-#include <set>
 
 void Trading::TradeEngine::Start()
 {
@@ -77,8 +76,6 @@ void Trading::TradeEngine::HandleBuy(const std::string& trader,
 		{
 			auto& restingSellOrder = orders.front();
 			const std::uint64_t tradeQty = std::min(restingSellOrder.quantity, quantity);
-			std::cout<<"comparing " <<  restingSellOrder.identifier<< " and " <<trader<<"\n";
-			std::cout<<"min for " << restingSellOrder.quantity << " : " <<quantity<<"\n";
 			m_tradeInfo[{trader, '+'}][bestSellPrice] += tradeQty;
 			m_tradeInfo[{restingSellOrder.identifier, '-'}][bestSellPrice] += tradeQty;
 
@@ -118,10 +115,6 @@ void Trading::TradeEngine::HandleSell(const std::string& trader,
 		{
 			auto& restingBuyOrder = orders.front();
 			int tradeQty = std::min(restingBuyOrder.quantity, quantity);
-			std::cout<<"comparing " << restingBuyOrder.identifier << " and " <<trader<<"\n";
-
-			std::cout<<"min for " << restingBuyOrder.quantity << " : " <<quantity<<"\n";
-
 			m_tradeInfo[{trader, '-'}][bestBuyPrice] += tradeQty;
 			m_tradeInfo[{restingBuyOrder.identifier, '+'}][bestBuyPrice] += tradeQty;
 
