@@ -67,7 +67,7 @@ Trading::TradeEngine::TradeOrder Trading::TradeEngine::ParseInput(
 
 void Trading::TradeEngine::HandleBuy(const std::string& trader,
                                      std::uint64_t quantity,
-                                     std::uint64_t price) noexcept
+                                     const std::uint64_t price) noexcept
 {
     while (quantity > 0 && !m_sellOrders.empty())
     {
@@ -151,6 +151,7 @@ void Trading::TradeEngine::HandleSell(const std::string& trader,
 void Trading::TradeEngine::CollectTrades() noexcept
 {
     std::vector<std::string> tradeOutput;
+	tradeOutput.reserve(m_tradeInfo.size());
     for (const auto& [identifier, sign] : m_tradeInfo)
     {
         const std::string& trader = identifier.first;
@@ -203,15 +204,13 @@ void Trading::TradeEngine::ProcessOrder(const TradeOrder& order)
     }
 }
 
-const Trading::TradeEngine::ordersMap& Trading::TradeEngine::GetBuyOrders()
-    const noexcept
+const Trading::TradeEngine::ordersMap& Trading::TradeEngine::GetBuyOrders() const noexcept
 {
     std::shared_lock lock(m_mutex);
     return m_buyOrders;
 }
 
-const Trading::TradeEngine::ordersMap& Trading::TradeEngine::GetSellOrders()
-    const noexcept
+const Trading::TradeEngine::ordersMap& Trading::TradeEngine::GetSellOrders() const noexcept
 {
     std::shared_lock lock(m_mutex);
     return m_sellOrders;
